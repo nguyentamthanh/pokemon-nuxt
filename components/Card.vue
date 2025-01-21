@@ -1,29 +1,36 @@
 <template>
   <div
-    class="inline-block mr-1 mb-1"
-    :class="{ 'opacity-50 pointer-events-none': isDisabled }"
+    :class="[
+      'inline-block mr-4 mb-4 relative',
+      { 'cursor-default': isDisabled },
+    ]"
     :style="{
       height: `${(920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16}px`,
-      width: `$${
+      width: `${
         (((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4
       }px`,
-      perspective: `$${
+      perspective: `${
         ((((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) / 4) * 2
       }px`,
     }"
   >
+    <div class="text-black">
+      {{ isFlipped }}
+    </div>
     <div
-      class="relative w-full h-full transition-transform duration-1000 transform-style-3d cursor-pointer"
-      :class="{ 'rotate-y-180': isFlipped }"
+      :class="[
+        'w-full h-full transition-transform duration-[1s] cursor-pointer relative transform-gpu',
+        { 'rotate-y-180': isFlipped },
+      ]"
       @click="onToggleFlipCard"
     >
+      <!-- Front face -->
       <div
-        class="absolute w-full h-full backface-hidden overflow-hidden rounded-lg p-4 shadow-lg"
+        class="absolute w-full h-full overflow-hidden shadow-[0_3px_10px_3px_rgba(0,0,0,0.2)] p-4 rounded-2xl backface-hidden"
       >
         <div
-          class="h-full w-full bg-center bg-no-repeat"
+          class="w-full h-full bg-center bg-no-repeat bg-[url(/images/icon_back.png)]"
           :style="{
-            backgroundImage: `url(${require('@/assets/images/icon_back.png')})`,
             backgroundSize: `${
               (((920 - 16 * 4) / Math.sqrt(cardsContext.length) - 16) * 3) /
               4 /
@@ -36,14 +43,13 @@
           }"
         ></div>
       </div>
+      <!-- Back face -->
       <div
-        class="absolute w-full h-full bg-[#f8f9fa] transform rotate-y-180 backface-hidden overflow-hidden rounded-lg p-4 shadow-lg"
+        class="absolute w-full h-full overflow-hidden shadow-[0_3px_10px_3px_rgba(0,0,0,0.2)] p-4 rounded-2xl backface-hidden bg-white rotate-y-180 transform"
       >
         <div
-          class="h-full w-full bg-center bg-contain bg-no-repeat"
-          :style="{
-            backgroundImage: `url(${require(`@/assets/` + imgBackFaceUrl)})`,
-          }"
+          class="bg-contain bg-[center_center] bg-no-repeat h-full w-full"
+          :class="`bg-[url(${imgBackFaceUrl})]`"
         ></div>
       </div>
     </div>
@@ -64,20 +70,10 @@ const props = defineProps({
     default: () => [],
   },
 });
-const emit = defineEmits(["onFlip"]);
 const isDisabled = ref(false);
 const isFlipped = ref(false);
 function onToggleFlipCard() {
   if (isDisabled.value) return;
   isFlipped.value = !isFlipped.value;
-  if (isFlipped.value) emit("onFlip", props.card);
-}
-
-function onFlipBackCard() {
-  isFlipped.value = false;
-}
-
-function onEnabledDisableMode() {
-  isDisabled.value = true;
 }
 </script>

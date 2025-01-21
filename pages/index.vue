@@ -6,7 +6,7 @@
   />
   <InteractScreen
     v-if="statusMatch === statusSettings.MATCH"
-    v-model:settings.cardsContext="settings.cardsContext"
+    v-model:cardsContext="settings.cardsContext"
     @onFinish="onGetResult"
   />
   <ResultScreen
@@ -14,7 +14,7 @@
     :timer="timer"
     @onStartAgain="statusMatch = statusSettings.DEFAULT"
   />
-  <CopyRight />
+  <!-- <CopyRight /> -->
 </template>
 
 <script setup>
@@ -23,12 +23,17 @@ import InteractScreen from "@/components/InteractScreen.vue";
 import ResultScreen from "@/components/ResultScreen.vue";
 import CopyRight from "@/components/CopyRight.vue";
 
-const statusMatch = ref(statusSettings.DEFAULT);
+const statusMatch = ref(statusSettings.MATCH);
 const timer = ref(0);
+// const settings = ref({
+//   totalOfBlocks: 0,
+//   cardsContext: [],
+//   startedAt: null,
+// });
 const settings = ref({
-  totalOfBlocks: 0,
-  cardsContext: [],
-  startedAt: null,
+  totalOfBlocks: 16,
+  cardsContext: [6, 8, 7, 6, 3, 5, 4, 5, 3, 2, 1, 1, 2, 4, 7, 8],
+  startedAt: 1737431508670,
 });
 function onGetResult() {
   if (settings.value.startedAt) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen absolute top-0 left-0 z-2 bg-dark text-light">
+  <div class="w-full h-screen absolute top-0 left-0 z-2 text-light">
     <div
       class="flex flex-wrap mx-auto my-8"
       :style="{
@@ -10,11 +10,11 @@
         }px`,
       }"
     >
-      <card-flip
+      <Card
         v-for="(card, index) in cardsContext"
         :key="index"
         :ref="`card-${index}`"
-        :imgBackFaceUrl="`@/assets/images/${card}.png`"
+        :imgBackFaceUrl="`/images/${card}.png`"
         :card="{ index, value: card }"
         :cardsContext="cardsContext"
         @onFlip="checkRule($event)"
@@ -24,9 +24,13 @@
 </template>
 
 <script setup>
-import CardFlip from "./Card.vue";
-const cardsContext = ref([]);
+import Card from "./Card.vue";
+const cardsContext = defineModel("cardsContext", {
+  type: Array,
+  required: true,
+});
 const rules = ref([]);
+
 function checkRule(card) {
   if (rules.value.length === 2) return false;
   rules.value.push(card);

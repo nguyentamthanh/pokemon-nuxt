@@ -27,7 +27,6 @@ const statusMatch = defineModel("statusMatch", {
   type: String,
   required: true,
 });
-console.log("🚀 ~ settings:", settings.value);
 const arrSelected = ref([
   {
     id: 1,
