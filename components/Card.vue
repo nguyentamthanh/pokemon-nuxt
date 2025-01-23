@@ -5,7 +5,7 @@
     :style="cardStyle"
   >
     <div
-      class="w-full h-full transition-transform duration-[1s] cursor-pointer relative transform-gpu preserve-3d"
+      class="w-full h-full transition-transform duration-[1s] cursor-pointer relative preserve-3d"
       :class="{ 'rotate-y-180': isFlipped }"
       @click="onToggleFlipCard"
     >
@@ -39,12 +39,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  cardsContext: {
-    type: Array,
-    default: () => [],
-  },
 });
-const emit = defineEmits(["onFlip"]);
+const cardsContext = defineModel("cardsContext", {
+  type: Array,
+  required: true,
+});
 const isDisabled = ref(false);
 const isFlipped = ref(false);
 const rules = ref([]);
@@ -71,7 +70,7 @@ const backContentStyle = computed(() => ({
 function onToggleFlipCard() {
   if (isDisabled.value) return;
   isFlipped.value = !isFlipped.value;
-  // if (isFlipped.value) emit("onFlip", props.card);
+  if (isFlipped.value) checkRule(props.card);
 }
 function onFlipBackCard() {
   isFlipped.value = false;
@@ -80,33 +79,35 @@ function onEnabledDisableMode() {
   isDisabled.value = true;
 }
 function checkRule(card) {
-  if (rules.value.length === 2) return false;
   rules.value.push(card);
-  if (
-    rules.value.length === 2 &&
-    rules.value[0].value === rules.value[1].value
-  ) {
-    const firstCardRef = rules.value[0].index;
-    const secondCardRef = rules.value[1].index;
-    if (firstCardRef !== undefined && secondCardRef !== undefined) {
-      const firstCard = cardsContext.value[firstCardRef];
-      const secondCard = cardsContext.value[secondCardRef];
-      firstCard.onEnabledDisableMode();
-      secondCard.onEnabledDisableMode();
-    }
-    rules.value = [];
-    const disabledElements = document.querySelectorAll(
-      ".screen .card.disabled"
-    );
-    if (
-      disabledElements &&
-      disabledElements.length === cardsContext.value.length - 2
-    ) {
-      setTimeout(() => {
-        console.log("Complete All Events API requests");
-      }, 920);
-    }
-  }
-  return;
+  console.log("🚀 ~ checkRule ~ rules:", rules.value);
+  // if (rules.value.length === 2) return false;
+  // rules.value.push(card);
+  // if (
+  //   rules.value.length === 2 &&
+  //   rules.value[0].value === rules.value[1].value
+  // ) {
+  //   const firstCardRef = rules.value[0].index;
+  //   const secondCardRef = rules.value[1].index;
+  //   if (firstCardRef !== undefined && secondCardRef !== undefined) {
+  //     const firstCard = cardsContext.value[firstCardRef];
+  //     const secondCard = cardsContext.value[secondCardRef];
+  //     firstCard.onEnabledDisableMode();
+  //     secondCard.onEnabledDisableMode();
+  //   }
+  //   rules.value = [];
+  //   const disabledElements = document.querySelectorAll(
+  //     ".screen .card.disabled"
+  //   );
+  //   if (
+  //     disabledElements &&
+  //     disabledElements.length === cardsContext.value.length - 2
+  //   ) {
+  //     setTimeout(() => {
+  //       console.log("Complete All Events API requests");
+  //     }, 920);
+  //   }
+  // }
+  // return;
 }
 </script>

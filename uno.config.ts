@@ -3,7 +3,7 @@ import { defineConfig } from 'unocss'
 export default defineConfig({
   theme: {
     fontFamily: {
-      sans: 'Inter',
+      primary: "Odibee Sans",
     },
     colors: {
       primary_dark: '#212121',

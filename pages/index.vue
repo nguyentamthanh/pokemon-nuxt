@@ -32,8 +32,73 @@ const timer = ref(0);
 // });
 const settings = ref({
   totalOfBlocks: 16,
-  cardsContext: [6, 8, 7, 6, 3, 5, 4, 5, 3, 2, 1, 1, 2, 4, 7, 8],
-  startedAt: 1737431508670,
+  cardsContext: [
+    {
+      id: 7,
+      isFlipped: false,
+    },
+    {
+      id: 8,
+      isFlipped: false,
+    },
+    {
+      id: 2,
+      isFlipped: false,
+    },
+    {
+      id: 1,
+      isFlipped: false,
+    },
+    {
+      id: 2,
+      isFlipped: false,
+    },
+    {
+      id: 1,
+      isFlipped: false,
+    },
+    {
+      id: 7,
+      isFlipped: false,
+    },
+    {
+      id: 8,
+      isFlipped: false,
+    },
+    {
+      id: 5,
+      isFlipped: false,
+    },
+    {
+      id: 4,
+      isFlipped: false,
+    },
+    {
+      id: 3,
+      isFlipped: false,
+    },
+    {
+      id: 6,
+      isFlipped: false,
+    },
+    {
+      id: 5,
+      isFlipped: false,
+    },
+    {
+      id: 3,
+      isFlipped: false,
+    },
+    {
+      id: 4,
+      isFlipped: false,
+    },
+    {
+      id: 6,
+      isFlipped: false,
+    },
+  ],
+  startedAt: 1737623050351,
 });
 function onGetResult() {
   if (settings.value.startedAt) {
